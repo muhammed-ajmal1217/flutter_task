@@ -8,7 +8,19 @@ class AuthGate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User? user=FirebaseAuth.instance.currentUser;
-   return Scaffold(body: user!=null?HomePage():ToggleAuth(),);
+    return Scaffold(
+      body: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasData && snapshot.data != null) {
+            return HomePage();
+          } else {
+            return ToggleAuth();
+          }
+        },
+      ),
+    );
   }
 }

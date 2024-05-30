@@ -6,7 +6,8 @@ class TextFormFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final bool? obscureText;
-  final TextInputType? keyboardType;
+  final Color? color;
+  final int?maxLine;
 
   TextFormFieldWidget({
     super.key,
@@ -14,7 +15,8 @@ class TextFormFieldWidget extends StatelessWidget {
     required this.controller,
     this.validator,
     this.obscureText,
-    this.keyboardType,
+    this.color,
+    this.maxLine,
   });
 
   @override
@@ -22,11 +24,11 @@ class TextFormFieldWidget extends StatelessWidget {
     return TextFormField(
       controller: controller,
       validator: validator,
+      maxLines: maxLine??1,
       obscureText: obscureText??false,
-      keyboardType: keyboardType,
       decoration: InputDecoration(
         hintText: hintText,
-        fillColor: AppColors.loginTextfieldColor,
+        fillColor: color??AppColors.loginTextfieldColor,
         filled: true,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
